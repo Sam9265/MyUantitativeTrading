@@ -17,4 +17,4 @@ apscheduler==3.10.4
 pandas==2.2.3
 numpy==1.26.4
 akshare==1.18.64
-tushare==1.4.0
+tushare==1.4.29
