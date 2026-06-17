@@ -1,7 +1,6 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tsconfigPaths from "vite-tsconfig-paths";
-import tailwindcss from '@tailwindcss/vite'
 import { traeBadgePlugin } from 'vite-plugin-trae-solo-badge';
 
 // https://vite.dev/config/
@@ -17,7 +16,6 @@ export default defineConfig({
         ],
       },
     }),
-    tailwindcss(),
     traeBadgePlugin({
       variant: 'dark',
       position: 'bottom-right',

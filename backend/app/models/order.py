@@ -25,5 +25,5 @@ class Order(Base):
     filled_quantity: Mapped[int] = mapped_column(Integer, default=0)
     is_simulated: Mapped[bool] = mapped_column(Boolean, default=True)
     broker_order_id: Mapped[str] = mapped_column(String(100), nullable=True)
-    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
-    filled_at: Mapped[datetime] = mapped_column(DateTime, nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=datetime.utcnow)
+    filled_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=True)

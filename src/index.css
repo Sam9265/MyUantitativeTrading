@@ -45,11 +45,6 @@ body {
   background: #2D4A6F;
 }
 
-/* 数字字体 */
-.font-mono {
-  font-family: 'JetBrains Mono', 'Fira Code', monospace;
-}
-
 /* 输入框去除默认样式 */
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {

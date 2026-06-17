@@ -121,13 +121,13 @@ async def get_account():
 
     total_profit = sum(p.profit_loss for p in positions)
     total_market_value = sum(p.market_value for p in positions)
-    initial_total = 1000000
+    initial_total = simulated_broker.initial_cash
 
     return AccountResponse(
         cash=balance.cash,
         total_assets=balance.total_assets,
         market_value=total_market_value,
         profit_loss=total_profit,
-        profit_loss_percent=(total_profit / initial_total * 100),
+        profit_loss_percent=(total_profit / initial_total * 100) if initial_total > 0 else 0,
         positions=position_responses,
     )

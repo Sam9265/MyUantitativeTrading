@@ -6,6 +6,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 from typing import List
 from app.core.database import get_db
+from app.core.config import settings
 from app.models.backtest import Backtest
 from app.schemas.backtest import BacktestCreate, BacktestResponse
 from app.services.backtest_engine import BacktestEngine
@@ -21,11 +22,14 @@ async def run_backtest_task(backtest_id: str, request: BacktestCreate, db_url: s
     SessionLocal = async_sessionmaker(engine, expire_on_commit=False)
 
     async with SessionLocal() as session:
+        backtest = None
         try:
             result = await session.execute(
                 select(Backtest).where(Backtest.id == backtest_id)
             )
-            backtest = result.scalar_one()
+            backtest = result.scalar_one_or_none()
+            if not backtest:
+                return
 
             # 创建回测引擎
             engine_obj = BacktestEngine(
@@ -37,16 +41,17 @@ async def run_backtest_task(backtest_id: str, request: BacktestCreate, db_url: s
             )
 
             # 执行回测
-            strategy_type = "dual_ma"  # 默认双均线策略
+            strategy_type = request.strategy_code or "dual_ma"
             result_data = await engine_obj.run(strategy_type)
 
             backtest.result = result_data
             backtest.status = "completed"
             await session.commit()
         except Exception as e:
-            backtest.status = "failed"
-            backtest.error = str(e)
-            await session.commit()
+            if backtest:
+                backtest.status = "failed"
+                backtest.error = str(e)
+                await session.commit()
         finally:
             await engine.dispose()
 
@@ -78,7 +83,7 @@ async def create_backtest(
         run_backtest_task,
         str(backtest.id),
         data,
-        "postgresql+asyncpg://postgres:postgres@localhost:5432/quantx",
+        settings.database_url,
     )
 
     return backtest
