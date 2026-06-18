@@ -18,7 +18,7 @@ class StockResponse(StockBase):
     """股票响应"""
     price: float = 0.0
     change: float = 0.0
-    change_percent: float = Field(0.0, alias="changePercent")
+    changePercent: float = 0.0
     volume: int = 0
     amount: float = 0.0
     open: float = 0.0
