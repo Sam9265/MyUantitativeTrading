@@ -49,6 +49,7 @@ class DataCollector:
                     "low": float(row.get("最低", 0)),
                     "close": float(row.get("昨收", 0)),
                     "market": "CN",
+                    "industry": str(row.get("所属行业", "")) or None,
                 })
             except (ValueError, TypeError):
                 continue
@@ -90,6 +91,7 @@ class DataCollector:
                     "low": float(row.get("最低", 0)),
                     "close": float(row.get("昨收", 0)),
                     "market": "HK",
+                    "industry": str(row.get("所属行业", "")) or None,
                 })
             except (ValueError, TypeError):
                 continue
@@ -131,6 +133,7 @@ class DataCollector:
                     "low": float(row.get("最低", 0)),
                     "close": float(row.get("昨收", 0)),
                     "market": "US",
+                    "industry": str(row.get("所属行业", "")) or None,
                 })
             except (ValueError, TypeError):
                 continue

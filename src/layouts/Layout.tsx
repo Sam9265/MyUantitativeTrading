@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 import { useNavStore } from '@/stores';
 import {
+  Home,
   TrendingUp,
   Star,
   Code,
@@ -14,6 +15,7 @@ interface LayoutProps {
 }
 
 const navItems = [
+  { key: 'home', label: '首页', icon: Home },
   { key: 'market', label: '行情', icon: TrendingUp },
   { key: 'watchlist', label: '自选', icon: Star },
   { key: 'strategy', label: '策略', icon: Code },

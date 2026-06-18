@@ -15,6 +15,7 @@ export interface Stock {
   low: number;         // 最低价
   close: number;       // 昨收价
   market: Market;      // 市场
+  industry?: string;   // 所属行业
 }
 
 // K线数据

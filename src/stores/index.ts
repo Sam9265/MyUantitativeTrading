@@ -131,7 +131,7 @@ export const useTradeStore = create<TradeStore>((set) => ({
 }));
 
 // 导航Store
-type NavKey = 'market' | 'watchlist' | 'strategy' | 'backtest' | 'trade';
+type NavKey = 'home' | 'market' | 'watchlist' | 'strategy' | 'backtest' | 'trade';
 
 interface NavStore {
   activeNav: NavKey;
@@ -139,6 +139,6 @@ interface NavStore {
 }
 
 export const useNavStore = create<NavStore>((set) => ({
-  activeNav: 'market',
+  activeNav: 'home',
   setActiveNav: (nav) => set({ activeNav: nav }),
 }));

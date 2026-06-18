@@ -35,6 +35,8 @@ class StockListResponse(BaseModel):
     """股票列表响应"""
     market: str
     total: int
+    page: int = 1
+    page_size: int = 50
     stocks: List[StockResponse]
 
 

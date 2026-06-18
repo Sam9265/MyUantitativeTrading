@@ -1,6 +1,7 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Layout from '@/layouts/Layout';
 import { useNavStore } from '@/stores';
+import Home from '@/pages/Home';
 import MarketPage from '@/pages/MarketPage';
 import WatchlistPage from '@/pages/WatchlistPage';
 import StrategyPage from '@/pages/StrategyPage';
@@ -13,6 +14,7 @@ function MainContent() {
 
   return (
     <>
+      {activeNav === 'home' && <Home />}
       {activeNav === 'market' && <MarketPage />}
       {activeNav === 'watchlist' && <WatchlistPage />}
       {activeNav === 'strategy' && <StrategyPage />}
@@ -35,6 +37,14 @@ export default function App() {
           }
         />
         <Route
+          path="/home"
+          element={
+            <Layout>
+              <Home />
+            </Layout>
+          }
+        />
+        <Route
           path="/stock/:code"
           element={
             <Layout>
@@ -42,6 +52,7 @@ export default function App() {
             </Layout>
           }
         />
+        <Route path="*" element={<Navigate to="/home" replace />} />
       </Routes>
     </Router>
   );

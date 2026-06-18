@@ -12,14 +12,22 @@ router = APIRouter()
 @router.get("/list", response_model=StockListResponse)
 async def get_market_list(
     market: str = Query(..., pattern="^(CN|HK|US)$", description="市场类型"),
+    page: int = Query(1, ge=1, description="页码"),
+    page_size: int = Query(50, ge=1, le=200, description="每页数量"),
+    search: Optional[str] = Query(None, description="搜索代码或名称"),
+    sort_by: str = Query("code", description="排序字段"),
+    sort_order: str = Query("asc", pattern="^(asc|desc)$", description="排序方向"),
 ):
-    """获取市场行情列表"""
-    stocks = await market_service.get_market_list(market)
-    return StockListResponse(
+    """获取市场行情列表（支持分页、搜索、排序）"""
+    result = await market_service.get_market_list(
         market=market,
-        total=len(stocks),
-        stocks=stocks,
+        page=page,
+        page_size=page_size,
+        search=search,
+        sort_by=sort_by,
+        sort_order=sort_order,
     )
+    return StockListResponse(**result)
 
 
 @router.get("/stock/{code}")
